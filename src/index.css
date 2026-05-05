@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-gold: 197 160 89;
+    --brand-black: 10 10 10;
+    --brand-cream: 245 242 237;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #050505;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Common Buttons */
+  .metallic-btn {
+    @apply px-10 py-4 border border-brand-gold/40 bg-transparent text-brand-gold text-[10px] tracking-[0.4em] 
+           uppercase transition-all duration-700 hover:bg-brand-gold hover:text-brand-black 
+           hover:shadow-[0_0_30px_rgba(197,160,89,0.3)] relative overflow-hidden;
+  }
+
+  .primary-btn {
+    @apply px-10 py-4 bg-brand-gold text-brand-black font-bold tracking-[0.2em] text-[10px] uppercase 
+           transition-all duration-500 hover:bg-white hover:shadow-[0_0_40px_rgba(255,255,255,0.1)]
+           disabled:opacity-20 disabled:cursor-not-allowed;
+  }
+
+  .secondary-btn {
+    @apply px-8 py-3 border border-white/10 text-white/60 text-[10px] tracking-[0.2em] 
+           font-bold uppercase hover:border-brand-gold hover:text-brand-gold transition-all duration-500;
+  }
+
+  /* Cards */
+  .glass-card {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/10 p-10 rounded-sm shadow-2xl;
+  }
+
+  .premium-input {
+    @apply w-full bg-[#111] border-b border-white/10 py-4 px-2 text-white font-light focus:outline-none focus:border-brand-gold transition-all duration-500;
+  }
+
+  /* Text Effects */
+  .gold-gradient-text {
+    @apply bg-gradient-to-br from-[#c5a059] via-[#e9d5a1] to-[#c5a059] bg-clip-text text-transparent;
+  }
+  
+  .font-cursive {
+    font-family: 'Dancing Script', cursive;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.animate-fade { animation: fadeIn 1.2s ease-out forwards; }
+.animate-slide { animation: slideUp 1s ease-out forwards; }
+
+/* Background effects */
+.bg-mesh-dark {
+  background-image: radial-gradient(at 0% 0%, hsla(45, 70%, 50%, 0.05) 0, transparent 50%),
+                    radial-gradient(at 100% 100%, hsla(45, 70%, 50%, 0.03) 0, transparent 50%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 10px; }
