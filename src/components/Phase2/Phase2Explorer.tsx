@@ -1,26 +1,46 @@
 import { useState, useEffect } from 'react'
 import { useWorkshopStore } from '../../store/useWorkshopStore'
 import TransitionWrapper from '../UI/TransitionWrapper'
-import { DEFAULT_IMAGES, CATEGORIES, MoodboardImage } from '../../data/moodboardImages'
+import { DEFAULT_IMAGES, CATEGORIES, DEFAULT_IMAGES_BUSINESS, CATEGORIES_BUSINESS, MoodboardImage } from '../../data/moodboardImages'
 import { Settings, Plus, X, Check, Save, Trash2 } from 'lucide-react'
 
 export default function Phase2Explorer() {
-  const { setPhase, phase2, setPhase2 } = useWorkshopStore()
+  const { setPhase, phase2, setPhase2, clientInfo } = useWorkshopStore()
+  const isEmpresa = clientInfo.type === 'empresa'
+  
+  const currentDefaultImages = isEmpresa ? DEFAULT_IMAGES_BUSINESS : DEFAULT_IMAGES
+  const currentCategories = isEmpresa ? CATEGORIES_BUSINESS : CATEGORIES
+  const storageKey = isEmpresa ? 'moodboard-gallery-business' : 'moodboard-gallery'
+  const versionKey = isEmpresa ? 'moodboard-version-business' : 'moodboard-version'
+
   const [images, setImages] = useState<MoodboardImage[]>([])
   const [filter, setFilter] = useState('Todos')
   const [isAdmin, setIsAdmin] = useState(false)
   const [adminForm, setAdminForm] = useState<Partial<MoodboardImage>>({ title: '', category: 'Todos', url: '' })
 
-  // Initialize images from localStorage or default
+  // Initialize images
   useEffect(() => {
-    const saved = localStorage.getItem('moodboard-gallery')
-    if (saved) {
-      setImages(JSON.parse(saved))
-    } else {
-      setImages(DEFAULT_IMAGES)
-      localStorage.setItem('moodboard-gallery', JSON.stringify(DEFAULT_IMAGES))
+    const version = localStorage.getItem(versionKey)
+    // Force sync once to ensure the recovered images from code are loaded into browser cache
+    if (version !== '7') {
+      setImages(currentDefaultImages)
+      localStorage.setItem(storageKey, JSON.stringify(currentDefaultImages))
+      localStorage.setItem(versionKey, '7')
+      return
     }
-  }, [])
+
+    const saved = localStorage.getItem(storageKey)
+    if (saved) {
+      try {
+        setImages(JSON.parse(saved))
+      } catch {
+        setImages(currentDefaultImages)
+      }
+    } else {
+      setImages(currentDefaultImages)
+    }
+  }, [isEmpresa])
+
 
   const toggleImage = (img: MoodboardImage) => {
     const isSelected = phase2.selectedImages.find(i => i.id === img.id)
@@ -40,14 +60,14 @@ export default function Phase2Explorer() {
       newImgs.push({ ...adminForm as MoodboardImage, id: Date.now().toString() })
     }
     setImages(newImgs)
-    localStorage.setItem('moodboard-gallery', JSON.stringify(newImgs))
+    localStorage.setItem(storageKey, JSON.stringify(newImgs))
     setAdminForm({ title: '', category: 'Todos', url: '' })
   }
 
   const deleteImage = (id: string) => {
     const newImgs = images.filter(i => i.id !== id)
     setImages(newImgs)
-    localStorage.setItem('moodboard-gallery', JSON.stringify(newImgs))
+    localStorage.setItem(storageKey, JSON.stringify(newImgs))
   }
 
   const filteredImages = filter === 'Todos' ? images : images.filter(i => i.category === filter)
@@ -59,7 +79,7 @@ export default function Phase2Explorer() {
           <div className="space-y-2">
             <h2 className="text-4xl font-playfair">¿Qué imágenes resuenan contigo?</h2>
             <p className="text-sm font-light text-brand-black/60">
-              Selecciona entre 6 y 12 imágenes que representen las emociones y sensaciones de tu hogar ideal.
+              Selecciona entre 6 y 12 imágenes que representen las emociones y sensaciones de {isEmpresa ? 'tu espacio de trabajo' : 'tu hogar ideal'}.
             </p>
           </div>
           <button 
@@ -91,7 +111,7 @@ export default function Phase2Explorer() {
                    onChange={e => setAdminForm({...adminForm, category: e.target.value})}
                    className="w-full bg-white border border-brand-black/5 p-2 text-sm"
                 >
-                  {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  {currentCategories.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
               <div className="space-y-2">
@@ -136,7 +156,7 @@ export default function Phase2Explorer() {
         ) : (
           <div className="space-y-12">
             <div className="flex flex-wrap gap-2">
-               {CATEGORIES.map(c => (
+               {currentCategories.map(c => (
                  <button
                   key={c}
                   onClick={() => setFilter(c)}

@@ -33,3 +33,10 @@ dist-ssr
 # Build outputs
 build/
 dist/
+
+# Recovery & temporary folders
+scratch_ldb/
+recovered_*.json
+db_copy/
+scratch*.cjs
+scratch*.txt

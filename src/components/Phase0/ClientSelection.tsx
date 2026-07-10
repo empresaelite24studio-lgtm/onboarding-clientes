@@ -5,13 +5,9 @@ import { User, Building2, ArrowRight } from 'lucide-react'
 export default function ClientSelection() {
   const { setPhase, setClientInfo } = useWorkshopStore()
 
-  const handleSelection = (type: 'persona' | 'empresa' | 'colaborador') => {
+  const handleSelection = (type: 'persona' | 'empresa') => {
     setClientInfo({ type })
-    if (type === 'colaborador') {
-      setPhase(50)
-    } else {
-      setPhase(2)
-    }
+    setPhase(2)
   }
 
   return (
@@ -28,7 +24,7 @@ export default function ClientSelection() {
           </p>
         </header>
 
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-16 max-w-3xl mx-auto w-full">
           <button 
             onClick={() => handleSelection('persona')}
             className="group relative bg-[#111] p-10 border border-white/5 transition-all duration-700 hover:border-brand-gold/50 flex flex-col items-center gap-8 hover:-translate-y-2 shadow-2xl"
@@ -81,34 +77,6 @@ export default function ClientSelection() {
              </div>
           </button>
 
-          <button 
-            onClick={() => handleSelection('colaborador')}
-            className="group relative bg-[#111] p-10 border border-white/5 transition-all duration-700 hover:border-brand-gold/50 flex flex-col items-center gap-8 hover:-translate-y-2 shadow-2xl"
-          >
-             <div className="absolute inset-0 bg-brand-gold/0 group-hover:bg-brand-gold/[0.02] transition-colors"></div>
-
-             <div className="w-20 h-20 rounded-full border border-brand-gold/20 flex items-center justify-center text-brand-gold group-hover:bg-brand-gold group-hover:text-black transition-all duration-500 shadow-lg shadow-brand-gold/5">
-                <div className="relative">
-                  <User size={32} strokeWidth={1} />
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-brand-gold rounded-full animate-ping"></div>
-                </div>
-             </div>
-
-             <div className="space-y-4 text-center relative z-10">
-                <div className="space-y-2">
-                   <h3 className="text-2xl font-playfair tracking-normal">Talento / Equipo</h3>
-                   <div className="h-0.5 w-0 group-hover:w-full bg-brand-gold mx-auto transition-all duration-700"></div>
-                </div>
-                <div className="space-y-2">
-                   <p className="text-[9px] tracking-[0.2em] font-bold text-white/40 uppercase">Onboarding Elite 24</p>
-                   <p className="text-white/20 text-[10px] italic font-light">Bienvenida a la familia Studio.</p>
-                </div>
-             </div>
-
-             <div className="mt-4 flex items-center gap-3 text-brand-gold text-[9px] tracking-widest font-bold uppercase opacity-40 group-hover:opacity-100 transition-all">
-                COMENZAR <ArrowRight size={12} />
-             </div>
-          </button>
         </div>
       </div>
     </TransitionWrapper>

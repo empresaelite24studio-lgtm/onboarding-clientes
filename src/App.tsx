@@ -26,8 +26,7 @@ import FinalVoting from './components/Phase7/FinalVoting'
 import CompletionScreen from './components/Completion/CompletionScreen'
 import EliteTalentFlow from './components/EliteTalent/EliteTalentFlow'
 import ParticleBackground from './components/UI/ParticleBackground'
-import FloatingAudio from './components/UI/FloatingAudio'
-import { useEffect, useState } from 'react'
+
 
 function App() {
   const { currentPhase } = useWorkshopStore()
@@ -35,8 +34,31 @@ function App() {
 
   const renderPhase = () => {
     switch (currentPhase) {
-      case 0: return <LandingPage key="l" />
-      case 1: return <EliteTalentFlow key="etf" />
+      case 0: return <LandingPage key="0" />
+      case 1: return <ClientSelection key="1" />
+      case 2: return <Phase1Form key="2" />
+      case 3: return <Phase1Words key="3" />
+      case 4: return <Phase1Story key="4" />
+      case 5: return <Phase1Profile key="5" />
+      case 6: return <Phase2Intro key="6" />
+      case 7: return <Phase2Explorer key="7" />
+      case 8: return <Phase2Moodboard key="8" />
+      case 9: return <Phase2Phrase key="9" />
+      case 10: return <Phase3Intro key="10" />
+      case 11: return <Phase3Sketch key="11" />
+      case 12: return <Phase3Routine key="12" />
+      case 13: return <Phase3Keywords key="13" />
+      case 14: return <Phase3Purpose key="14" />
+      case 15: return <TimelinePhase key="15" />
+      case 16: return <Phase5Intro key="16" />
+      case 17: return <Phase5Form key="17" />
+      case 18: return <Phase6Intro key="18" />
+      case 19: return <Phase6Meditation key="19" />
+      case 20: return <Phase6Vision key="20" />
+      case 21: return <Phase6ArchResult key="21" />
+      case 22: return <FinalVoting key="22" />
+      case 23: return <CompletionScreen key="23" />
+      case 50: return <EliteTalentFlow key="50" />
       default: return <LandingPage key="def" />
     }
   }
@@ -49,7 +71,6 @@ function App() {
         <AnimatePresence mode="wait">
           {renderPhase()}
         </AnimatePresence>
-        <FloatingAudio />
       </main>
     </div>
   )

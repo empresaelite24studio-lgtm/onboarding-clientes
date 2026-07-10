@@ -5,16 +5,22 @@ import { generateArchitecturalVision } from '../../utils/iaService'
 import { Sparkles, ArrowRight } from 'lucide-react'
 
 export default function Phase6ArchResult() {
-  const { setPhase, phase6, setPhase6 } = useWorkshopStore()
+  const { setPhase, phase6, setPhase6, clientInfo } = useWorkshopStore()
   const [loading, setLoading] = useState(true)
+  const isEmpresa = clientInfo?.type === 'empresa'
 
   useEffect(() => {
     // Simulate IA processing
     const timer = setTimeout(() => {
-      const state = useWorkshopStore.getState()
-      const vision = generateArchitecturalVision(state)
-      setPhase6({ iaVision: vision })
-      setLoading(false)
+      try {
+        const state = useWorkshopStore.getState()
+        const vision = generateArchitecturalVision(state)
+        setPhase6({ iaVision: vision })
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
     }, 3500)
     return () => clearTimeout(timer)
   }, [])
@@ -28,9 +34,14 @@ export default function Phase6ArchResult() {
              <Sparkles className="absolute inset-0 m-auto text-brand-gold animate-pulse" size={32} />
           </div>
           <div className="space-y-4">
-             <p className="text-brand-gold tracking-[0.4em] text-[10px] font-bold uppercase">Interpretando tu casa soñada...</p>
+             <p className="text-brand-gold tracking-[0.4em] text-[10px] font-bold uppercase">
+               {isEmpresa ? 'Interpretando su visión corporativa...' : 'Interpretando tu casa soñada...'}
+             </p>
              <p className="text-white/40 text-[10px] uppercase tracking-widest leading-relaxed">
-               La IA está convirtiendo tu boceto y visión en una propuesta realista...
+               {isEmpresa 
+                 ? 'La IA está convirtiendo su identidad y estrategia en una propuesta arquitectónica realista...'
+                 : 'La IA está convirtiendo tu boceto y visión en una propuesta realista...'
+               }
              </p>
           </div>
         </div>

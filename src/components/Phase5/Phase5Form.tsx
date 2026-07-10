@@ -1,6 +1,7 @@
 import { useWorkshopStore } from '../../store/useWorkshopStore'
 import TransitionWrapper from '../UI/TransitionWrapper'
 import DrawingCanvas from '../UI/DrawingCanvas'
+import MicButton from '../UI/MicButton'
 import { Sparkles, Camera, PenTool, ArrowRight } from 'lucide-react'
 import { useRef, useState } from 'react'
 
@@ -35,7 +36,7 @@ export default function Phase5Form() {
           <p className="text-brand-gold tracking-[0.3em] text-[10px] font-bold uppercase animate-fade leading-relaxed">FASE 5 · EL ADN DEL ESPACIO</p>
           <h2 className="text-4xl md:text-6xl font-playfair font-light animate-slide">{isEmpresa ? 'El Elemento de Marca' : 'El Objeto Emocional'}</h2>
           <p className="text-brand-black/40 font-light italic text-sm animate-fade">
-             {isEmpresa ? 'Definan ese símbolo que narra su trayectoria' : 'Cuéntanos sobre ese objeto que tiene un lugar especial en tu vida'}
+            {isEmpresa ? 'Definan ese símbolo que narra su trayectoria' : 'Cuéntanos sobre ese objeto que tiene un lugar especial en tu vida'}
           </p>
         </header>
 
@@ -44,8 +45,8 @@ export default function Phase5Form() {
             <div className="space-y-6">
               <div className="space-y-2">
                 <label className="text-[10px] tracking-[0.3em] font-bold text-brand-black/40 uppercase">{isEmpresa ? 'Nombre del Elemento' : 'Nombre del Objeto'}</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={phase5.objectName}
                   onChange={(e) => updateField('objectName', e.target.value)}
                   placeholder={isEmpresa ? 'Ej: Primer Logotipo, Trofeo, Mueble icónico...' : 'Ej: Reloj de mi abuelo, Pintura favorita...'}
@@ -55,8 +56,8 @@ export default function Phase5Form() {
 
               <div className="space-y-2">
                 <label className="text-[10px] tracking-[0.3em] font-bold text-brand-black/40 uppercase">{isEmpresa ? 'Su valor para la marca' : '¿Por qué es especial?'}</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={phase5.emotion}
                   onChange={(e) => updateField('emotion', e.target.value)}
                   placeholder={isEmpresa ? 'Innovación, Historia, Unión...' : 'Nostalgia, Calma, Identidad...'}
@@ -67,7 +68,7 @@ export default function Phase5Form() {
               <div className="space-y-2">
                 <label className="text-[10px] tracking-[0.3em] font-bold text-brand-black/40 uppercase">{isEmpresa ? 'Origen y significado' : 'Historia del objeto'}</label>
                 <div className="relative">
-                  <textarea 
+                  <textarea
                     value={phase5.history}
                     onChange={(e) => updateField('history', e.target.value)}
                     placeholder={isEmpresa ? 'Cuéntanos cómo llegó este elemento a la empresa...' : 'Cuéntanos cómo llegó a ti y qué representa...'}
@@ -83,7 +84,7 @@ export default function Phase5Form() {
             <div className="grid md:grid-cols-3 gap-8 pt-12">
               <div className="space-y-3">
                 <label className="text-[9px] tracking-[0.3em] font-bold text-brand-black/40 uppercase">{isEmpresa ? 'Descripción del elemento' : 'Descripción física'}</label>
-                <textarea 
+                <textarea
                   value={phase5.description}
                   onChange={(e) => updateField('description', e.target.value)}
                   placeholder={isEmpresa ? 'Materiales, colores, formas...' : 'Color, material, tamaño, aroma...'}
@@ -92,7 +93,7 @@ export default function Phase5Form() {
               </div>
               <div className="space-y-3">
                 <label className="text-[9px] tracking-[0.3em] font-bold text-brand-black/40 uppercase">{isEmpresa ? 'Rol en la Sede' : 'Rol en la vivienda'}</label>
-                <textarea 
+                <textarea
                   value={phase5.livingRole}
                   onChange={(e) => updateField('livingRole', e.target.value)}
                   placeholder={isEmpresa ? '¿Qué impacto debe tener en el espacio?' : '¿Cómo interactúas con él a diario?'}
@@ -101,7 +102,7 @@ export default function Phase5Form() {
               </div>
               <div className="space-y-3">
                 <label className="text-[9px] tracking-[0.3em] font-bold text-brand-black/40 uppercase">{isEmpresa ? 'Elemento complementario' : 'Objeto complementario'}</label>
-                <textarea 
+                <textarea
                   value={phase5.extraObject}
                   onChange={(e) => updateField('extraObject', e.target.value)}
                   placeholder={isEmpresa ? '¿Qué otro elemento potenciaría este símbolo?' : '¿Qué otro objeto lo acompañaría?'}
@@ -111,62 +112,62 @@ export default function Phase5Form() {
             </div>
           </div>
 
-           <div className="space-y-8 flex flex-col">
-              <div className="flex-1 min-h-[400px] relative group flex flex-col">
-                 {mode === 'upload' ? (
-                   <div className="w-full h-full min-h-[400px] bg-brand-black/5 border border-dashed border-brand-black/20 flex flex-col items-center justify-center gap-4 transition-all hover:bg-brand-black/10 rounded-2xl overflow-hidden">
-                      {phase5.image ? (
-                         <img src={phase5.image} alt="Objeto" className="w-full h-full object-contain p-4" />
-                      ) : (
-                         <div className="text-center space-y-4">
-                            <Camera className="w-12 h-12 text-brand-gold mx-auto" strokeWidth={1} />
-                            <p className="text-[10px] tracking-widest font-bold text-brand-black/40 uppercase">REPRESENTA TU OBJETO</p>
-                         </div>
-                      )}
-                   </div>
-                 ) : (
-                   <DrawingCanvas 
-                      onSave={(data) => setPhase5({ image: data })} 
-                      initialData={phase5.image}
-                      placeholder="RECUERDO"
-                      height="100%"
-                   />
-                 )}
-              </div>
+          <div className="space-y-8 flex flex-col">
+            <div className="flex-1 min-h-[400px] relative group flex flex-col">
+              {mode === 'upload' ? (
+                <div className="w-full h-full min-h-[400px] bg-brand-black/5 border border-dashed border-brand-black/20 flex flex-col items-center justify-center gap-4 transition-all hover:bg-brand-black/10 rounded-2xl overflow-hidden">
+                  {phase5.image ? (
+                    <img src={phase5.image} alt="Objeto" className="w-full h-full object-contain p-4" />
+                  ) : (
+                    <div className="text-center space-y-4">
+                      <Camera className="w-12 h-12 text-brand-gold mx-auto" strokeWidth={1} />
+                      <p className="text-[10px] tracking-widest font-bold text-brand-black/40 uppercase">REPRESENTA TU OBJETO</p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <DrawingCanvas
+                  onSave={(data) => setPhase5({ image: data })}
+                  initialData={phase5.image}
+                  placeholder="RECUERDO"
+                  height="100%"
+                />
+              )}
+            </div>
 
-              <div className="flex items-center gap-4">
-                 <button 
-                  onClick={() => { setMode('upload'); fileInputRef.current?.click() }}
-                  className={`secondary-btn w-full flex items-center justify-center gap-3 ${mode === 'upload' ? 'bg-white/5 border-white/20' : ''}`}
-                 >
-                    <Camera size={16} /> CARGAR IMAGEN
-                 </button>
-                 <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileUpload} />
-                 
-                 <button 
-                  onClick={() => setMode('draw')}
-                  className={`secondary-btn w-full flex items-center justify-center gap-3 text-brand-gold border-brand-gold/20 ${mode === 'draw' ? 'bg-brand-gold/10' : ''}`}
-                 >
-                    <PenTool size={16} /> DIBUJAR
-                 </button>
-              </div>
-           </div>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => { setMode('upload'); fileInputRef.current?.click() }}
+                className={`w-full flex items-center justify-center gap-3 px-8 py-4 text-[11px] tracking-[0.2em] font-bold uppercase transition-all duration-300 ${mode === 'upload' ? 'bg-brand-black text-brand-cream shadow-xl' : 'bg-brand-black/5 text-brand-black border border-brand-black/10 hover:bg-brand-black/10'}`}
+              >
+                <Camera size={16} /> CARGAR IMAGEN
+              </button>
+              <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileUpload} />
+
+              <button
+                onClick={() => setMode('draw')}
+                className={`w-full flex items-center justify-center gap-3 px-8 py-4 text-[11px] tracking-[0.2em] font-bold uppercase transition-all duration-300 ${mode === 'draw' ? 'bg-brand-black text-brand-cream shadow-xl' : 'bg-brand-black/5 text-brand-black border border-brand-black/10 hover:bg-brand-black/10'}`}
+              >
+                <PenTool size={16} /> DIBUJAR
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col items-center gap-10 pt-10">
-           <button 
+          <button
             disabled={!phase5.objectName}
             onClick={() => setPhase(18)}
             className={`metallic-btn min-w-[350px] group ${!phase5.objectName ? 'opacity-20' : 'animate-pulse-gold scale-105'}`}
-           >
-              <span className="flex items-center justify-center gap-3">
-                 <Sparkles size={16} /> GENERAR VISIÓN CON IA
-              </span>
-           </button>
-           
-           <button onClick={() => setPhase(18)} className="text-[10px] tracking-[0.4em] text-white/20 hover:text-brand-gold transition-all uppercase font-bold">
-              CONTINUAR <ArrowRight size={14} className="inline ml-2" />
-           </button>
+          >
+            <span className="flex items-center justify-center gap-3">
+              <Sparkles size={16} /> GENERAR VISIÓN CON IA
+            </span>
+          </button>
+
+          <button onClick={() => setPhase(18)} className="text-[10px] tracking-[0.4em] text-white/20 hover:text-brand-gold transition-all uppercase font-bold">
+            CONTINUAR <ArrowRight size={14} className="inline ml-2" />
+          </button>
         </div>
       </div>
     </TransitionWrapper>
